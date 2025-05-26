@@ -31,7 +31,7 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 EXPOSE 80
 
 # Start PHP-FPM and NGINX
-COPY ./docker/start.sh /start.sh
+COPY ./start.sh /start.sh
 RUN chmod +x /start.sh
 
 CMD ["bash", "/start.sh"]
