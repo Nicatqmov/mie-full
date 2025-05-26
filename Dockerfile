@@ -34,5 +34,5 @@ EXPOSE 80
 # Start PHP-FPM and NGINX
 COPY ./start.sh /start.sh
 RUN chmod +x /start.sh
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx-site.conf /etc/nginx/conf.d/default.conf
 CMD ["bash", "/start.sh"]
