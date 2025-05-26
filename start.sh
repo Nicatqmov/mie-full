@@ -18,4 +18,4 @@ php artisan view:cache
 php artisan migrate --force || true
 
 # Start NGINX in foreground
-nginx -g "daemon off;"
+nginx -c /etc/nginx/nginx.conf -g "daemon off;"
