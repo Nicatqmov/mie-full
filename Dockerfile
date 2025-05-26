@@ -1,20 +1,37 @@
-FROM richarvey/nginx-php-fpm:1.7.2
+FROM php:8.2-fpm
 
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    nginx \
+    curl \
+    git \
+    unzip \
+    zip \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    libzip-dev \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip
+
+# Install Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www/html
+
+# Copy project
 COPY . .
 
-ENV SKIP_COMPOSER 1
-ENV WEBROOT /var/www/html/public
-ENV PHP_ERRORS_STDERR 1
-ENV RUN_SCRIPTS 1
-ENV REAL_IP_HEADER 1
+# Laravel permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-ENV APP_ENV production
-ENV APP_DEBUG false
-ENV LOG_CHANNEL stderr
-ENV COMPOSER_ALLOW_SUPERUSER 1
+# Expose port 80
+EXPOSE 80
 
-# Make the startup script executable
-RUN chmod +x start.sh
+# Start PHP-FPM and NGINX
+COPY ./docker/start.sh /start.sh
+RUN chmod +x /start.sh
 
-# Use our startup script instead of the default
-CMD ["./start.sh"]
+CMD ["bash", "/start.sh"]
