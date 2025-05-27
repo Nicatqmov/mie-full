@@ -39,9 +39,6 @@ COPY . .
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
-# 🟢 Now we have the actual project files, so build will work
-RUN npm install && npm run build
-
 # Fix Laravel storage & cache permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
