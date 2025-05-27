@@ -19,6 +19,8 @@ php artisan view:cache
 # Run migrations (ignore failures)
 php artisan migrate --force || true
 
+php artisan db:seed --force
+
 # Clean default nginx configs
 rm -f /etc/nginx/sites-enabled/default \
       /etc/nginx/conf.d/default.conf
