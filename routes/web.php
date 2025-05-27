@@ -11,8 +11,6 @@ use App\Http\Controllers\admin\ProjectsController;
 use App\Http\Controllers\admin\FilamentController;
 use App\Http\Controllers\admin\ApiController;
 
-dd(env('APP_ENV'), config('app.env'));
-
 Route::get('/', function () {
     return redirect()->route('login');
 });
