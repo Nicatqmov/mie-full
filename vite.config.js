@@ -7,7 +7,7 @@ export default defineConfig({
         manifest: true,
         manifestFileName: 'manifest.json',
         rollupOptions: {
-            input: ['resources/js/app.js'],
+            input: ['resources/js/app.js', 'resources/css/app.css',],
         },
         emptyOutDir: true,
     },
