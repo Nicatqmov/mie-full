@@ -1,6 +1,6 @@
 FROM php:8.3-fpm
 
-# Install system dependencies
+# Install system dependencies and PHP extensions (including pdo_pgsql)
 RUN apt-get update && apt-get install -y \
     build-essential \
     nginx \
@@ -14,26 +14,43 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     libpq-dev \
     libicu-dev \
-    && docker-php-ext-install pdo pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd zip intl \
-    && docker-php-ext-enable pdo_pgsql
+  && docker-php-ext-install \
+       pdo \
+       pdo_mysql \
+       pdo_pgsql \
+       mbstring \
+       exif \
+       pcntl \
+       bcmath \
+       gd \
+       zip \
+       intl
 
-# Install Composer
+# Install Composer globally
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy project
+# Copy project files
 COPY . .
 
-# Laravel permissions
+# Fix Laravel storage & cache permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose port 80
+# Remove stock Nginx welcome configs
+RUN rm -f /etc/nginx/sites-enabled/default \
+       /etc/nginx/conf.d/default.conf
+
+# Copy your custom Nginx vhost
+COPY ./conf/nginx/nginx-site.conf /etc/nginx/conf.d/laravel.conf
+
+# Expose HTTP port
 EXPOSE 80
 
-# Start PHP-FPM and NGINX
+# Copy & make start script executable
 COPY ./start.sh /start.sh
 RUN chmod +x /start.sh
-COPY ./conf/nginx/nginx-site.conf /etc/nginx/conf.d/default.conf
+
+# Use your start script
 CMD ["bash", "/start.sh"]
