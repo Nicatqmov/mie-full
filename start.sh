@@ -1,14 +1,19 @@
 #!/bin/bash
 set -e
 
-# Start PHP-FPM
+# Start PHP-FPM in background
 php-fpm &
 
 # Give PHP-FPM a moment
 sleep 2
 
-# Install dependencies & optimize Laravel
+# Install PHP dependencies
 composer install --no-dev --optimize-autoloader
+
+# Build Vite assets
+npm install && npm run build
+
+# Laravel optimizations
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
@@ -16,9 +21,9 @@ php artisan view:cache
 # Run migrations (ignore failures)
 php artisan migrate --force || true
 
-# Ensure no default Nginx configs remain
+# Clean default nginx configs
 rm -f /etc/nginx/sites-enabled/default \
       /etc/nginx/conf.d/default.conf
 
-# Start Nginx in the foreground using the main config
+# Start Nginx in foreground
 nginx -g "daemon off;"
