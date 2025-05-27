@@ -38,6 +38,13 @@ COPY . .
 # Fix Laravel storage & cache permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Add Node.js (change version if needed)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
+
+# Install npm dependencies and build Vite assets
+RUN npm install && npm run build
+
 # Remove stock Nginx welcome configs
 RUN rm -f /etc/nginx/sites-enabled/default \
        /etc/nginx/conf.d/default.conf

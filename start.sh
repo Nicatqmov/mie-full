@@ -10,8 +10,6 @@ sleep 2
 # Install PHP dependencies
 composer install --no-dev --optimize-autoloader
 
-# Build Vite assets
-npm install && npm run build
 
 # Laravel optimizations
 php artisan config:cache
