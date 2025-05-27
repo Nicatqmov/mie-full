@@ -35,29 +35,29 @@ WORKDIR /var/www/html
 # Copy project files
 COPY . .
 
-# Fix Laravel storage & cache permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-
-# Add Node.js (change version if needed)
+# Add Node.js and build front-end after copying
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get install -y nodejs
 
-# Install npm dependencies and build Vite assets
+# 🟢 Now we have the actual project files, so build will work
 RUN npm install && npm run build
 
-# Remove stock Nginx welcome configs
-RUN rm -f /etc/nginx/sites-enabled/default \
-       /etc/nginx/conf.d/default.conf
+# Fix Laravel storage & cache permissions
+RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Copy your custom Nginx vhost
+# Remove default Nginx configs
+RUN rm -f /etc/nginx/sites-enabled/default \
+        /etc/nginx/conf.d/default.conf
+
+# Copy custom Nginx config
 COPY ./conf/nginx/nginx-site.conf /etc/nginx/conf.d/laravel.conf
 
-# Expose HTTP port
+# Expose port
 EXPOSE 80
 
 # Copy & make start script executable
 COPY ./start.sh /start.sh
 RUN chmod +x /start.sh
 
-# Use your start script
+# Start
 CMD ["bash", "/start.sh"]
