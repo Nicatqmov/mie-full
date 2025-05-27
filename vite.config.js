@@ -5,7 +5,7 @@ export default defineConfig({
     build: {
         outDir: 'public/build',
         manifest: true,
-        manifestFileName: 'manifest.json',
+        manifestFileName: '/.vite/manifest.json',
         rollupOptions: {
             input: ['resources/js/app.js'],
         },
