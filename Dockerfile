@@ -26,6 +26,8 @@ RUN apt-get update && apt-get install -y \
        zip \
        intl
 
+RUN echo "max_execution_time = 120" > /usr/local/etc/php/conf.d/max_execution_time.ini
+
 # Install Composer globally
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
