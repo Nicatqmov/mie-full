@@ -24,7 +24,7 @@ rm -f /etc/nginx/sites-enabled/default \
       /etc/nginx/conf.d/default.conf
 
 # Start queue worker in the background (logs errors & restarts on failure)
-php artisan queue:work &
+php artisan queue:work
 
 # Start Nginx in foreground
 nginx -g "daemon off;"

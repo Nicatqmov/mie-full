@@ -63,12 +63,12 @@ return [
         ],
 
         'mie_projects' => [
-            'driver' => 'mysql',
-            'host' => env('DB_SECONDARY_HOST', '127.0.0.1'),
-            'port' => env('DB_SECONDARY_PORT', '3306'),
-            'database' => env('DB_SECONDARY_DATABASE', 'forge'),
-            'username' => env('DB_SECONDARY_USERNAME', 'forge'),
-            'password' => env('DB_SECONDARY_PASSWORD', ''),
+            'driver' => 'pgsql',
+            'host' => env('DB_SECONDARY_HOST'),
+            'port' => env('DB_SECONDARY_PORT'),
+            'database' => env('DB_SECONDARY_DATABASE'),
+            'username' => env('DB_SECONDARY_USERNAME'),
+            'password' => env('DB_SECONDARY_PASSWORD'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
