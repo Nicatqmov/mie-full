@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Filament\Facades\Filament;
+use Filament\Panel;
 use Filament\Navigation\NavigationItem;
 use App\Models\Project;
 use App\Models\Entity;
@@ -26,6 +27,13 @@ class FilamentServiceProvider extends ServiceProvider
                 Create::class,
                 Edit::class,
             ]);
+
+            Filament::registerPanel(function (Panel $panel) {
+                $panel->canAccess(function () {
+                    return true;
+                });
+            });
         });
+
     }
 } 
