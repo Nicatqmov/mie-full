@@ -15,7 +15,7 @@ php artisan config:clear
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
-php artisan migrate --force
+# php artisan migrate --force
 
 # Run migrations and seeders (force mode for production)
 # php artisan migrate
