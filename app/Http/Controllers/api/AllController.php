@@ -44,7 +44,7 @@ class AllController extends Controller
             return response()->json(['message' => 'Table not found'], 404);
         }
         $dynamicModel = new \App\Models\DynamicModel();
-        $data = $dynamicModel->setTableName($table->table_name.'_'.$project->id)->get();
+        $data = $dynamicModel->setTableName($table->table_name)->get();
         return response()->json($data);
     }
 
