@@ -141,7 +141,10 @@ class Edit extends Page implements Forms\Contracts\HasForms
         $model->fill($data);
         $model->save();
 
-        $this->redirect()->back()->with('success', 'Record updated successfully');
+        $this->redirect(route('filament.admin.pages.entity-data', [
+            'project' => $this->project->id,
+            'entity' => $this->entity->id,
+        ]));
     }
     
 
