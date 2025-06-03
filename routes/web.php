@@ -25,19 +25,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/project/{projectID}', [DynamicController::class, 'getProject']);
     Route::get('/project/{projectID}/entity/{tableName}', [DynamicController::class, 'getEntity']);
     Route::post('/project/{projectID}/entity/{tableName}', [DynamicController::class, 'storeEntity']);
-    
+});
     // Filament Admin Panel Routes
-    Route::get('/admin/projects/{project}/dynamic', [FilamentController::class, 'redirectToFilament'])
-        ->name('projects.filament');
+Route::get('/admin/projects/{project}/dynamic', [FilamentController::class, 'redirectToFilament'])
+    ->name('projects.filament');
 
-});
-
-Route::get('/check-filament', function () {
-    return [
-        'auth_check' => auth()->check(),
-        'canAccessFilament' => auth()->user()?->canAccessFilament(),
-    ];
-});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
