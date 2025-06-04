@@ -13,6 +13,7 @@ class DataTypeModelSeeder extends Seeder
      */
     public function run(): void
     {
+        DB::table('data_type_models')->truncate();
         DB::table('data_type_models')->insert([
             ['name' => 'String',
             'type' => 'string',],
@@ -21,7 +22,7 @@ class DataTypeModelSeeder extends Seeder
             ['name' => 'Boolean',
             'type' => 'boolean',],
             ['name' => 'Image',
-            'type' => 'string',],
+            'type' => 'image',],
             ['name' => 'Date',
             'type' => 'date',]
         ]);
