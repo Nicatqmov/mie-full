@@ -73,7 +73,7 @@ class Create extends Page implements Forms\Contracts\HasForms
                 ->label(ucfirst(str_replace('_', ' ', $name)))
                 ->image()
                 ->disk('public')
-                ->directory(fn () => $this->entity->table_name . '_' . $this->project->id)
+                ->directory(fn () => $this->entity->table_name)
                 ->visibility('public')
                 ->imageResizeMode('cover')
                 ->imageCropAspectRatio('16:9')
